@@ -9,7 +9,7 @@ const day =
   date.getUTCDate() < 10 ? "0" + date.getUTCDate() : String(date.getUTCDate());
 export const dateUTC = year + month + day;
 
-export const API_LINK = "https://api.valantis.store:40000/";
+export const API_LINK = "https://api.valantis.store:41000/";
 export const PASSWORD = md5(`Valantis_${dateUTC}`);
 // export const PASSWORD = md5("Valantis_20240301");
 export const HEADERS = {
