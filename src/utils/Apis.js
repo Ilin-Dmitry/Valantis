@@ -5,7 +5,7 @@ export async function fetchIds() {
     const res = await fetch(API_LINK, {
       method: "POST",
       headers: HEADERS,
-      credentials: true,
+      credentials: "include",
       body: JSON.stringify({ action: "get_ids" }),
     });
     if (!res.ok)
@@ -23,7 +23,7 @@ export async function fetchItems(itemsArray) {
     const res = await fetch(API_LINK, {
       method: "POST",
       headers: HEADERS,
-      redentials: true,
+      credentials: "include",
       body: JSON.stringify({
         action: "get_items",
         params: { ids: itemsArray },
@@ -44,7 +44,7 @@ export async function fetchFilteredIds(type, value) {
     const res = await fetch(API_LINK, {
       method: "POST",
       headers: HEADERS,
-      redentials: true,
+      credentials: "include",
       body: JSON.stringify({
         action: "filter",
         params: { [type]: value },
