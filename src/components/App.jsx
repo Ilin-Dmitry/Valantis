@@ -64,6 +64,7 @@ function App() {
   );
 
   function handleSearch() {
+    if (isLoading) return;
     if (
       search.type === previousSearch.type &&
       search.value === previousSearch.value
