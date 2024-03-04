@@ -25,7 +25,7 @@ function SearchForm({
         document.removeEventListener("keydown", handleClickEnter);
       };
     },
-    [search, previousSearch]
+    [search, previousSearch, isLoading]
   );
 
   return (
