@@ -16,9 +16,10 @@ function App() {
   const [isLoading, setIsLoading] = useState(false);
   const [itemsOnPage, setItemsOnPage] = useState(50);
   const [currentPage, setCurrentPage] = useState(1);
-  const [fetchStatus, setFetchStatus] = useState("first render");
+  const [fetchingIdsAttempt, setFetchingIdsAttempt] = useState(1);
+  const [fetchingItemsAttempt, setFetchingItemsAttempt] = useState(1);
   const [search, setSearch] = useState({ type: "product", value: "" });
-  const pagesNumber = noDuplicateIds / itemsOnPage;
+  const pagesNumber = Math.ceil(noDuplicateIds.length / itemsOnPage);
   const [previousSearch, setPreviousSearch] = useState({
     type: "product",
     value: "",
@@ -27,18 +28,16 @@ function App() {
 
   useEffect(
     function () {
-      if (fetchStatus !== "first render" && fetchStatus !== "error in fetchIds")
-        return;
       setIsLoading(true);
       fetchIds()
         .then((ids) => filterDuplicatedIds(ids))
         .then((filteredIds) => setNoDuplicateIds(filteredIds))
         .catch((err) => {
           console.log(err.message);
-          setFetchStatus("error in fetchIds");
+          setFetchingIdsAttempt((a) => a + 1);
         });
     },
-    [fetchStatus]
+    [fetchingIdsAttempt]
   );
 
   useEffect(
@@ -55,14 +54,13 @@ function App() {
         .then((itemsToRender) => setItemsToRender(itemsToRender))
         .then((res) => {
           setIsLoading(false);
-          setFetchStatus("fethcing succeeded");
         })
         .catch((err) => {
           console.log(err.message);
-          setFetchStatus("error in fetchItems");
+          setFetchingItemsAttempt((a) => a + 1);
         });
     },
-    [noDuplicateIds, currentPage, itemsOnPage, fetchStatus]
+    [noDuplicateIds, currentPage, itemsOnPage, fetchingItemsAttempt]
   );
 
   function handleSearch() {
@@ -86,7 +84,7 @@ function App() {
       .then((filteredIds) => setNoDuplicateIds(filteredIds))
       .catch((err) => {
         console.log(err.message);
-        setFetchStatus("error in fetchFilteredIds");
+        setFetchingIdsAttempt((a) => a + 1);
       });
   }
 
