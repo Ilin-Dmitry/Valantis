@@ -104,6 +104,7 @@ function App() {
         <SearchForm
           onSearch={handleSearch}
           search={search}
+          previousSearch={previousSearch}
           setSearch={setSearch}
           isLoading={isLoading}
         />

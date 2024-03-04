@@ -1,8 +1,32 @@
-function SearchForm({ onSearch, search, setSearch, isLoading }) {
+import { useEffect } from "react";
+
+function SearchForm({
+  onSearch,
+  search,
+  setSearch,
+  isLoading,
+  previousSearch,
+}) {
   function handleSearch() {
     if (!search.value || isLoading) return;
     onSearch();
   }
+
+  function handleClickEnter(e) {
+    if (e.key === "Enter") {
+      handleSearch();
+    }
+  }
+
+  useEffect(
+    function () {
+      document.addEventListener("keydown", handleClickEnter);
+      return function () {
+        document.removeEventListener("keydown", handleClickEnter);
+      };
+    },
+    [search, previousSearch]
+  );
 
   return (
     <div className="searchBar">
